@@ -1,0 +1,33 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-light.bg-faded
+  .container
+    a.navbar-brand.py-1 href="/"
+      img src='/logo.png' style='height: 28px;' alt='parking api rubetek'
+    button.navbar-toggler[type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"]
+      span.navbar-toggler-icon
+    / - if current_user&.is_admin
+    #navbarNavDropdown.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        / - cam_active_flag = %i[cameras_path camera_models_path].sum { |i| active_link_to_class(self.send(i), active: :inclusive) }
+        / li.nav-item.dropdown class=cam_active_flag
+        /   a#navbarDropdownCamLink.nav-link.dropdown-toggle[href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+        /     | Камеры
+        /   .dropdown-menu[aria-labelledby="navbarDropdownCamLink"]
+        /     a.dropdown-item href=cameras_path class=active_link_to_class(cameras_path, active: :inclusive)
+        /       | Камеры
+        /     a.dropdown-item href=camera_models_path class=active_link_to_class(camera_models_path, active: :inclusive)
+        /       | Модели
+        /     a.dropdown-item href=services_path class=active_link_to_class(services_path, active: :inclusive)
+        /       | Сервисы
+        li.nav-item
+          a.nav-link href='#'
+            | Пользователи
+    /
+    / - if current_user
+    /   ul.navbar-nav.ml-auto
+    /     li.nav-item.dropdown
+    /       a#user-dropdown.nav-link.dropdown-toggle[href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+    /         = current_user.email
+    /       .dropdown-menu[aria-labelledby='user-dropdown']
+    /         = link_to destroy_user_session_path, method: :delete, class: 'dropdown-item'
+    /           span.i.fas.fa-sign-out-alt
+    /           span.ml-1 Выход
